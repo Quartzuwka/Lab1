@@ -33,11 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
-
-                    Game()
-
-
+            Game()
         }
     }
 }
@@ -103,6 +99,7 @@ fun Game() {
                 horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                 OutlinedButton(
+                    enabled = false,
                     modifier = Modifier.weight(1f),
                     onClick = {}
                 ) {
@@ -112,6 +109,7 @@ fun Game() {
                     )
                 }
                 OutlinedButton(
+                    enabled = false,
                     modifier = Modifier.weight(1f),
                     onClick = { }
                 ) {
@@ -121,6 +119,7 @@ fun Game() {
                     )
                 }
                 OutlinedButton(
+                    enabled = false,
                     modifier = Modifier.weight(1f),
                     onClick = { }
                 ) {
