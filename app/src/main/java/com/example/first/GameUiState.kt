@@ -10,8 +10,8 @@ import androidx.compose.ui.res.painterResource
 
 data class GameUiState(
 
-    val computerChoice: String = "",
-    val userScore: Int = 15,
+
+    val userScore: Int = 0,
     val computerScore: Int = 0,
     val isGameOver: Boolean = false,
     val userChoice1: Int = R.drawable.rock,

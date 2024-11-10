@@ -67,7 +67,7 @@ fun Game(
             ) {
                 OutlinedButton(
                     modifier = Modifier.weight(1f),
-                    onClick = {}
+                    onClick = {mainViewModel.onChoose(mainUiState.userChoice1)}
                 ) {
                     Image(
                         bitmap = ImageBitmap.imageResource(mainUiState.userChoice1),
@@ -96,6 +96,7 @@ fun Game(
             Box(modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center) {
                 Text(text = stringResource(R.string.userScore, mainUiState.userScore))
+
             }
         }
 
