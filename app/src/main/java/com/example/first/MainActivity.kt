@@ -20,13 +20,22 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.first.ui.theme.FirstTheme
+import kotlin.Int
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +48,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Game() {
+fun Game(
+    mainViewModel: MainViewModel = viewModel()
+) {
+    val mainUiState by mainViewModel.uiState.collectAsState()
+
+
     Column(modifier = Modifier.fillMaxHeight()) {
         Column(
             modifier = Modifier.weight(1f).fillMaxSize(),
             verticalArrangement = Arrangement.Center
         ) {
+
             Box(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -55,7 +70,7 @@ fun Game() {
                     onClick = {}
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.rock),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice1),
                         contentDescription = "Камень"
                     )
                 }
@@ -64,7 +79,7 @@ fun Game() {
                     onClick = { }
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.scissors),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice2),
                         contentDescription = "Ножницы"
                     )
                 }
@@ -73,14 +88,14 @@ fun Game() {
                     onClick = { }
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.paper),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice3),
                         contentDescription = "Бумага"
                     )
                 }
             }
             Box(modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center) {
-                Text("1234")
+                Text(text = stringResource(R.string.userScore, mainUiState.userScore))
             }
         }
 
@@ -92,7 +107,7 @@ fun Game() {
         ) {
             Box(modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center) {
-                Text("1234")
+                Text(text = stringResource(R.string.computerScore, mainUiState.computerScore))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -104,7 +119,7 @@ fun Game() {
                     onClick = {}
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.rock),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice2),
                         contentDescription = "Камень"
                     )
                 }
@@ -114,7 +129,7 @@ fun Game() {
                     onClick = { }
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.scissors),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice1),
                         contentDescription = "Ножницы"
                     )
                 }
@@ -124,7 +139,7 @@ fun Game() {
                     onClick = { }
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.paper),
+                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice3),
                         contentDescription = "Бумага"
                     )
                 }
