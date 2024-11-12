@@ -1,10 +1,13 @@
 package com.example.first
 
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,6 +31,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
@@ -52,7 +58,10 @@ fun Game(
     mainViewModel: MainViewModel = viewModel()
 ) {
     val mainUiState by mainViewModel.uiState.collectAsState()
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
 
+    val color = if (isPressed) mainViewModel.changeButtonColor() else Color.White
 
     Column(modifier = Modifier.fillMaxHeight()) {
         Column(
@@ -76,7 +85,7 @@ fun Game(
                 }
                 OutlinedButton(
                     modifier = Modifier.weight(1f),
-                    onClick = { }
+                    onClick = {mainViewModel.onChoose(mainUiState.userChoice2)}
                 ) {
                     Image(
                         bitmap = ImageBitmap.imageResource(mainUiState.userChoice2),
@@ -84,8 +93,10 @@ fun Game(
                     )
                 }
                 OutlinedButton(
+                    interactionSource = interactionSource,
+                    colors= ButtonDefaults.buttonColors(color),
                     modifier = Modifier.weight(1f),
-                    onClick = { }
+                    onClick = {mainViewModel.onChoose(mainUiState.userChoice3)}
                 ) {
                     Image(
                         bitmap = ImageBitmap.imageResource(mainUiState.userChoice3),

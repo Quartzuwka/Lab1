@@ -1,14 +1,22 @@
 package com.example.first
 
 
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.Int
 import kotlin.properties.Delegates
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class MainViewModel: ViewModel() {
 
@@ -26,6 +34,8 @@ class MainViewModel: ViewModel() {
 
     var computerChoice by mutableStateOf("")
         private set
+
+    var buttonColorOnChange: MutableLiveData<Color> = MutableLiveData(Color(0xFF4CAF50))
 
     init {
         resetGame()
@@ -46,7 +56,11 @@ class MainViewModel: ViewModel() {
 
     fun onChoose(chosen: Int) {
 
-        if( chosen.toString() == onComputerChoose()) {
+        val onComputerChoose = onComputerChoose()
+
+
+
+        if( chosen.toString() == onComputerChoose) {
 
             val updatedScore = _uiState.value.userScore.plus(15)
 
@@ -59,6 +73,12 @@ class MainViewModel: ViewModel() {
         }
 
     }
+
+      fun changeButtonColor(): Color {
+
+
+          return Color.Green
+      }
 
     fun updateGameScore(updatedScore: Int, user: Boolean) {
         if (user) {
@@ -80,6 +100,12 @@ class MainViewModel: ViewModel() {
 
     fun onComputerChoose():String {
         computerChoice = possibilities.random().toString()
+
         return computerChoice
     }
+
 }
+//
+//ButtonDefaults.buttonColors(
+//containerColor = Color(0xFF4CAF50)
+//)
