@@ -80,7 +80,7 @@ class MainViewModel: ViewModel() {
 
 
     fun onChoose(chosen: Int) {
-        var win: Int = 0
+
 
         val onComputerChoose = onComputerChoose()
 
@@ -95,11 +95,30 @@ class MainViewModel: ViewModel() {
 
         } else {
 
+            if ((chosen == R.drawable.rock) and (onComputerChoose == R.drawable.scissors)) {
+                val updatedScore = _uiState.value.userScore.plus(15)
+
+                val user = true
+                updateGameScore(updatedScore, user)
+            }
+            else if ((chosen == R.drawable.paper) and (onComputerChoose == R.drawable.rock)) {
+                val updatedScore = _uiState.value.userScore.plus(15)
+
+                val user = true
+                updateGameScore(updatedScore, user)
+            }
+            else if ((chosen == R.drawable.scissors) and (onComputerChoose == R.drawable.paper)) {
+                val updatedScore = _uiState.value.userScore.plus(15)
+
+                val user = true
+                updateGameScore(updatedScore, user)
+            } else {
+                val user = false
+                val updatedScore = _uiState.value.computerScore.plus(15)
+                updateGameScore(updatedScore, user)
+            }
 
 
-            val user = false
-            val updatedScore = _uiState.value.computerScore.plus(15)
-            updateGameScore(updatedScore, user)
         }
 
         val coroutineScope = viewModelScope
