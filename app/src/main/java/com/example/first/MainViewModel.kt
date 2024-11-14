@@ -62,17 +62,17 @@ class MainViewModel: ViewModel() {
         when (x) {
             R.drawable.rock -> {
                 _uiState.value = _uiState.value.copy(ButtonColor1 = true)
-                delay(3000)
+                delay(1000)
                 _uiState.value = _uiState.value.copy(ButtonColor1 = false)
             }
             R.drawable.paper -> {
                 _uiState.value = _uiState.value.copy(ButtonColor2 = true)
-                delay(3000)
+                delay(1000)
                 _uiState.value = _uiState.value.copy(ButtonColor2 = false)
             }
             R.drawable.scissors -> {
                 _uiState.value = _uiState.value.copy(ButtonColor3 = true)
-                delay(3000)
+                delay(1000)
                 _uiState.value = _uiState.value.copy(ButtonColor3 = false)
             }
         }
@@ -127,7 +127,24 @@ class MainViewModel: ViewModel() {
             ChangeColor(onComputerChoose)
 
         }
-
+        if ((_uiState.value.userScore>=100) or (_uiState.value.computerScore>=100)) {
+            if (_uiState.value.userScore>=100) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isGameOver = true,
+                        user = true
+                    )
+                }
+            }
+            if (_uiState.value.computerScore>=100) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isGameOver = true,
+                        user = false
+                    )
+                }
+            }
+        }
     }
 
       fun changeButtonColor(): Color {
