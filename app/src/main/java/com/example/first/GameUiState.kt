@@ -3,6 +3,9 @@ package com.example.first
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.imageResource
@@ -10,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 
 data class GameUiState(
 
-
+    val ButtonColor: Boolean = false,
     val userScore: Int = 0,
     val computerScore: Int = 0,
     val isGameOver: Boolean = false,

@@ -17,6 +17,8 @@ import kotlin.Int
 import kotlin.properties.Delegates
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class MainViewModel: ViewModel() {
 
@@ -26,16 +28,16 @@ class MainViewModel: ViewModel() {
     val possibilities = listOf<Int>(uiState.value.computerChoice1,uiState.value.computerChoice2,uiState.value.computerChoice3)
 
 
-    var _userScore by mutableStateOf(0)
-        private set
-
-    var userChoice by mutableStateOf("")
-        private set
+//    var _userScore by mutableStateOf(0)
+//        private set
+//
+//    var userChoice by mutableStateOf("")
+//        private set
 
     var computerChoice by mutableStateOf("")
         private set
 
-    var buttonColorOnChange: MutableLiveData<Color> = MutableLiveData(Color(0xFF4CAF50))
+//    var buttonColorOnChange: MutableLiveData<Color> = MutableLiveData(Color(0xFF4CAF50))
 
     init {
         resetGame()
@@ -51,7 +53,14 @@ class MainViewModel: ViewModel() {
         computerChoice1 = R.drawable.rock,
         computerChoice2 = R.drawable.paper,
         computerChoice3 = R.drawable.scissors,
+
         )
+    }
+
+    suspend fun ChangeColor() {
+        _uiState.value = _uiState.value.copy(ButtonColor = true)
+        delay(3000)
+        _uiState.value = _uiState.value.copy(ButtonColor = false)
     }
 
     fun onChoose(chosen: Int) {
@@ -72,11 +81,14 @@ class MainViewModel: ViewModel() {
             updateGameScore(updatedScore, user)
         }
 
+        val coroutineScope = viewModelScope
+        coroutineScope.launch {
+            ChangeColor()
+        }
+
     }
 
       fun changeButtonColor(): Color {
-
-
           return Color.Green
       }
 

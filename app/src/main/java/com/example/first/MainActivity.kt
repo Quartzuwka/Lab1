@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -146,6 +147,11 @@ fun Game(
                     )
                 }
                 OutlinedButton(
+                    colors = if (mainUiState.ButtonColor) ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.Green
+                    ) else ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.White
+                    ),
                     enabled = false,
                     modifier = Modifier.weight(1f),
                     onClick = { }
