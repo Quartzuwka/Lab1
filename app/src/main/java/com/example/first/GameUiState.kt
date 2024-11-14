@@ -13,7 +13,9 @@ import androidx.compose.ui.res.painterResource
 
 data class GameUiState(
 
-    val ButtonColor: Boolean = false,
+    val ButtonColor1: Boolean = false,
+    val ButtonColor2: Boolean = false,
+    val ButtonColor3: Boolean = false,
     val userScore: Int = 0,
     val computerScore: Int = 0,
     val isGameOver: Boolean = false,

@@ -34,7 +34,7 @@ class MainViewModel: ViewModel() {
 //    var userChoice by mutableStateOf("")
 //        private set
 
-    var computerChoice by mutableStateOf("")
+    var computerChoice by mutableStateOf(0)
         private set
 
 //    var buttonColorOnChange: MutableLiveData<Color> = MutableLiveData(Color(0xFF4CAF50))
@@ -57,25 +57,46 @@ class MainViewModel: ViewModel() {
         )
     }
 
-    suspend fun ChangeColor() {
-        _uiState.value = _uiState.value.copy(ButtonColor = true)
-        delay(3000)
-        _uiState.value = _uiState.value.copy(ButtonColor = false)
+
+    suspend fun ChangeColor(x: Int) {
+        when (x) {
+            R.drawable.rock -> {
+                _uiState.value = _uiState.value.copy(ButtonColor1 = true)
+                delay(3000)
+                _uiState.value = _uiState.value.copy(ButtonColor1 = false)
+            }
+            R.drawable.paper -> {
+                _uiState.value = _uiState.value.copy(ButtonColor2 = true)
+                delay(3000)
+                _uiState.value = _uiState.value.copy(ButtonColor2 = false)
+            }
+            R.drawable.scissors -> {
+                _uiState.value = _uiState.value.copy(ButtonColor3 = true)
+                delay(3000)
+                _uiState.value = _uiState.value.copy(ButtonColor3 = false)
+            }
+        }
     }
 
+
     fun onChoose(chosen: Int) {
+        var win: Int = 0
 
         val onComputerChoose = onComputerChoose()
 
 
 
-        if( chosen.toString() == onComputerChoose) {
+        if( chosen == onComputerChoose) {
 
-            val updatedScore = _uiState.value.userScore.plus(15)
+            val updatedScore = _uiState.value.userScore.plus(0)
 
             val user = true
             updateGameScore(updatedScore, user)
+
         } else {
+
+
+
             val user = false
             val updatedScore = _uiState.value.computerScore.plus(15)
             updateGameScore(updatedScore, user)
@@ -83,7 +104,9 @@ class MainViewModel: ViewModel() {
 
         val coroutineScope = viewModelScope
         coroutineScope.launch {
-            ChangeColor()
+
+            ChangeColor(onComputerChoose)
+
         }
 
     }
@@ -110,14 +133,10 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    fun onComputerChoose():String {
-        computerChoice = possibilities.random().toString()
+    fun onComputerChoose():Int {
+        computerChoice = possibilities.random()
 
         return computerChoice
     }
 
 }
-//
-//ButtonDefaults.buttonColors(
-//containerColor = Color(0xFF4CAF50)
-//)

@@ -127,27 +127,22 @@ fun Game(
                 horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                 OutlinedButton(
+                    colors = if (mainUiState.ButtonColor1) ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.Green
+                    ) else ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.White
+                    ),
                     enabled = false,
                     modifier = Modifier.weight(1f),
                     onClick = {}
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice2),
+                        bitmap = ImageBitmap.imageResource(mainUiState.computerChoice1),
                         contentDescription = "Камень"
                     )
                 }
                 OutlinedButton(
-                    enabled = false,
-                    modifier = Modifier.weight(1f),
-                    onClick = { }
-                ) {
-                    Image(
-                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice1),
-                        contentDescription = "Ножницы"
-                    )
-                }
-                OutlinedButton(
-                    colors = if (mainUiState.ButtonColor) ButtonDefaults.buttonColors(
+                    colors = if (mainUiState.ButtonColor2) ButtonDefaults.buttonColors(
                         disabledContainerColor = Color.Green
                     ) else ButtonDefaults.buttonColors(
                         disabledContainerColor = Color.White
@@ -157,7 +152,22 @@ fun Game(
                     onClick = { }
                 ) {
                     Image(
-                        bitmap = ImageBitmap.imageResource(mainUiState.userChoice3),
+                        bitmap = ImageBitmap.imageResource(mainUiState.computerChoice2),
+                        contentDescription = "Ножницы"
+                    )
+                }
+                OutlinedButton(
+                    colors = if (mainUiState.ButtonColor3) ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.Green
+                    ) else ButtonDefaults.buttonColors(
+                        disabledContainerColor = Color.White
+                    ),
+                    enabled = false,
+                    modifier = Modifier.weight(1f),
+                    onClick = { }
+                ) {
+                    Image(
+                        bitmap = ImageBitmap.imageResource(mainUiState.computerChoice3),
                         contentDescription = "Бумага"
                     )
                 }
