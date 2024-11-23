@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
@@ -31,12 +32,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,6 +54,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.SemanticsActions.OnClick
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +67,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.first.ui.theme.FirstTheme
+import java.time.format.TextStyle
 import kotlin.Int
 
 class MainActivity : ComponentActivity() {
@@ -252,7 +258,9 @@ fun Main() {
 
             composable(NavRoutes.About.route) { About() }
         }
-        BottomNavigationBar(navController = navController)
+            BottomNavigationBar(navController = navController)
+
+
     }
 }
 
@@ -313,11 +321,28 @@ fun Home(){
 
 @Composable
 fun About(){
-    Text("About Page", fontSize = 30.sp)
+    SecondScreen()
 }
 
 sealed class NavRoutes(val route: String) {
     object Home : NavRoutes("home")
 
     object About : NavRoutes("about")
+}
+
+@Composable
+fun SecondScreen(mainViewModel: MainViewModel = viewModel()) {
+    val mainUiState by mainViewModel.uiState.collectAsState()
+//    var scoreValue by remember { mutableIntStateOf(15) }
+    Column {
+        OutlinedTextField(
+            value = mainUiState.scoreValue.toString(),
+            onValueChange = { input ->
+                val newScore = input.toIntOrNull() ?: 0 // Конвертация текста в Int (с обработкой ошибок)
+                mainViewModel.updateNumber(newScore) // Обновление состояния
+            },
+            label = { Text("Enter Score") },
+            singleLine = true
+        )
+    }
 }

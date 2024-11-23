@@ -1,9 +1,11 @@
 package com.example.first
 
 
+
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +28,17 @@ class MainViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
     val possibilities = listOf<Int>(uiState.value.computerChoice1,uiState.value.computerChoice2,uiState.value.computerChoice3)
-
+    var inputValue: MutableState<Int> = mutableStateOf(0)
+        private set
+    
+    fun updateNumber(input: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                scoreValue = input
+            )
+        }
+        inputValue.value = input
+    }
 
 //    var _userScore by mutableStateOf(0)
 //        private set
@@ -44,7 +56,8 @@ class MainViewModel: ViewModel() {
     }
 
     fun resetGame() {
-        _uiState.value = GameUiState(userScore = 0,
+        _uiState.value = GameUiState(
+        userScore = 0,
         computerScore= 0,
         isGameOver = false,
         userChoice1 = R.drawable.rock,
@@ -53,7 +66,7 @@ class MainViewModel: ViewModel() {
         computerChoice1 = R.drawable.rock,
         computerChoice2 = R.drawable.paper,
         computerChoice3 = R.drawable.scissors,
-
+        scoreValue = inputValue.value
         )
     }
 
@@ -96,25 +109,25 @@ class MainViewModel: ViewModel() {
         } else {
 
             if ((chosen == R.drawable.rock) and (onComputerChoose == R.drawable.scissors)) {
-                val updatedScore = _uiState.value.userScore.plus(15)
+                val updatedScore = _uiState.value.userScore.plus(_uiState.value.scoreValue)
 
                 val user = true
                 updateGameScore(updatedScore, user)
             }
             else if ((chosen == R.drawable.paper) and (onComputerChoose == R.drawable.rock)) {
-                val updatedScore = _uiState.value.userScore.plus(15)
+                val updatedScore = _uiState.value.userScore.plus(_uiState.value.scoreValue)
 
                 val user = true
                 updateGameScore(updatedScore, user)
             }
             else if ((chosen == R.drawable.scissors) and (onComputerChoose == R.drawable.paper)) {
-                val updatedScore = _uiState.value.userScore.plus(15)
+                val updatedScore = _uiState.value.userScore.plus(_uiState.value.scoreValue)
 
                 val user = true
                 updateGameScore(updatedScore, user)
             } else {
                 val user = false
-                val updatedScore = _uiState.value.computerScore.plus(15)
+                val updatedScore = _uiState.value.computerScore.plus(_uiState.value.scoreValue)
                 updateGameScore(updatedScore, user)
             }
 

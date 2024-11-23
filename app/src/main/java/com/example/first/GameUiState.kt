@@ -12,6 +12,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 
 data class GameUiState(
+    val scoreValue: Int = 15,
     val user: Boolean = false,
     val ButtonColor1: Boolean = false,
     val ButtonColor2: Boolean = false,
