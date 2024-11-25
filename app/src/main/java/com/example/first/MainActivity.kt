@@ -252,11 +252,12 @@ private fun FinalScoreDialog(
 @Composable
 fun Main() {
     val navController = rememberNavController()
+    val mainViewModel: MainViewModel = viewModel(LocalContext.current as ComponentActivity)
     Column(Modifier.padding(8.dp)) {
         NavHost(navController, startDestination = NavRoutes.Home.route, modifier = Modifier.weight(1f)) {
-            composable(NavRoutes.Home.route) { Home() }
+            composable(NavRoutes.Home.route) { Home(mainViewModel = mainViewModel) }
 
-            composable(NavRoutes.About.route) { About() }
+            composable(NavRoutes.About.route) { About(mainViewModel = mainViewModel) }
         }
             BottomNavigationBar(navController = navController)
 
@@ -315,13 +316,13 @@ data class BarItem(
 )
 
 @Composable
-fun Home(){
-    Game()
+fun Home(mainViewModel: MainViewModel){
+    Game(mainViewModel = mainViewModel)
 }
 
 @Composable
-fun About(){
-    SecondScreen()
+fun About(mainViewModel: MainViewModel){
+    SecondScreen(mainViewModel = mainViewModel)
 }
 
 sealed class NavRoutes(val route: String) {

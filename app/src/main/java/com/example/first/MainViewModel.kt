@@ -28,9 +28,14 @@ class MainViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
     val possibilities = listOf<Int>(uiState.value.computerChoice1,uiState.value.computerChoice2,uiState.value.computerChoice3)
+
     var inputValue: MutableState<Int> = mutableStateOf(0)
         private set
-    
+
+
+    private val _textState = mutableStateOf("")
+    val textState: State<String> = _textState
+
     fun updateNumber(input: Int) {
         _uiState.update { currentState ->
             currentState.copy(
